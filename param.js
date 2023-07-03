@@ -389,11 +389,9 @@ const isItDark = (imageData, c) => {
     }
     else if(lightLevel<t6){
       outputMode = 6;
-      console.log('penultima');
     }
     else if(1){
       outputMode = 7;
-      console.log('ultima');
     }
   
     return [outputMode, lightLevel]

@@ -201,8 +201,19 @@ for (i = 0; i < 4; i++) {
 //LEAD
 let leadNotes = [];
 let pentatonica;
-if(t=0){pentatonica=[1, 3, 4, 5, 8];}
-else{pentatonica=[1, 3, 4, 5, 7];}
+if(m<3){   //blues minor 
+  pentatonica=[1, 3, 4, 6, 7]; 
+  console.log('blues minor'); 
+} 
+else if(m<6){   //suspended 
+  pentatonica=[1, 2, 4, 5, 7]; 
+  console.log('suspended'); 
+} 
+else{   //major 
+  pentatonica=[1, 2, 3, 5, 6]; 
+  console.log('major'); 
+}
+
 for (i = 0; i < pentatonica.length; i++) {
   leadNotes[i] = getNoteFreq(selectedMode[pentatonica[i]-1], 4);
   leadNotes[i+pentatonica.length] = getNoteFreq(selectedMode[pentatonica[i]-1], 5);

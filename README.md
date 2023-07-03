@@ -1,6 +1,6 @@
 # The Sound Of Space
 
-This project was developed in the context of the "**_Advanced Coding Tools and Methodologies_**" course held at [Politecnico di Milano](https://www.polimi.it/) for the Master's Degree in [Music and Acoustic Engineering](https://suono.polimi.it/). The task was to design and implement a musical web application based on the `HTML`/`CSS`/`JavaScript` framework.
+This project was developed in the context of the "**_Advanced Coding Tools and Methodologies_**" course in combination with "**_Computer Music-Representation and Models_**" held at [Politecnico di Milano](https://www.polimi.it/) for the Master's Degree in [Music and Acoustic Engineering](https://suono.polimi.it/). The task was to design and implement a musical web application based on the `HTML`/`CSS`/`JavaScript` framework.
 
 The system can be tested by the user in two ways:
 
@@ -198,15 +198,31 @@ We should like to reiterate the qualitative nature of the algorithm by means of 
 
 ## Mode Computation - _Brightness_
 
-To estimate the brightness of the picture we employed a simple yet effective approach. By averaging their RGB coordinates, we associated a **grey value** to each pixel and computed the total grey value of the image by summing over all the pixels of the image. We then determine the **light level** of the picture via normalization of the total grey value by the area of the canvas. Finally, _if the ratio falls below a certain threshold_ (arbitrarily set to 100, in this case) the image is dubbed dark. The condition is relaxed by means of a variable named `fuzzy`, which divides the area. The `isItDark()` function is entrusted with the described process:
+To estimate the brightness of the picture we employed a simple yet effective approach. By averaging their RGB coordinates, we associated a **grey value** to each pixel and computed the total grey value of the image by summing over all the pixels of the image. We then determine the **light level** of the picture via normalization of the total grey value by the area of the canvas. Finally, _if the ratio falls below a certain threshold_ the image is set to one of the following Modes:
+- Lydian 
+- Ionian 
+- Mixolydian 
+- Dorian 
+- Aeolian 
+- Phrygian 
+- Locrian 
+
+The condition is relaxed by means of a variable named `fuzzy`, which divides the area. The `isItDark()` function is entrusted with the described process:
 
 ```javascript
 const isItDark = (imageData, c) => {
   var fuzzy = 1.5;
-  var threshold = 100;
+  var t1 = 40;
+  var t2 = 60;
+  var t3 = 90;
+  var t4 = 110;
+  var t5 = 140;
+  var t6 = 165;
+
   var data = imageData.data;
   var r,g,b;
   var totalGrey = 0;
+  var outputMode = 0;
 
   for(let x = 0, len = data.length; x < len; x+=4) {
     r = data[x];
@@ -218,9 +234,32 @@ const isItDark = (imageData, c) => {
   }
 
   var area = (c.width * c.height) / fuzzy,
-    lightLevel = Math.floor(totalGrey / area)
+    lightLevel = Math.floor(totalGrey / area);
+
+
+    if(lightLevel<t1){
+      outputMode = 1;
+    }
+    else if(lightLevel<t2){
+      outputMode = 2;
+    }
+    else if(lightLevel<t3){
+      outputMode = 3;
+    }
+    else if(lightLevel<t4){
+      outputMode = 4;
+    }
+    else if(lightLevel<t5){
+      outputMode = 5;
+    }
+    else if(lightLevel<t6){
+      outputMode = 6;
+    }
+    else if(1){
+      outputMode = 7;
+    }
   
-    return (lightLevel < threshold)
+    return [outputMode, lightLevel]
 };
 ```
 
